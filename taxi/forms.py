@@ -57,7 +57,7 @@ class DriversUsernameSearchForm(forms.Form):
         max_length=255,
         required=False,
         label="",
-        widget=forms.TextInput(attrs={"placeholder": "Search by title"}))
+        widget=forms.TextInput(attrs={"placeholder": "Search by username"}))
 
 
 class CarModelSearchForm(forms.Form):

@@ -83,6 +83,13 @@ class PrivateManufacturerTest(TestCase):
         after_count = Manufacturer.objects.count()
         self.assertNotEqual(before_count, after_count)
 
+    def test_search_cars(self):
+        for i in range(20):
+            Manufacturer.objects.create(name=f"test_name{i}", country="Some country")
+        res = self.client.get(MANUFACTURER_LIST_URL, {"name": "1"})
+        for manufacturer in res.context["manufacturer_list"]:
+            self.assertIn("1", manufacturer.name)
+
 
 class PublicCarTest(TestCase):
 
@@ -154,6 +161,13 @@ class PrivateCarTest(TestCase):
         after_count = Car.objects.count()
         self.assertNotEqual(before_count, after_count)
 
+    def test_search_cars(self):
+        for i in range(20):
+            Car.objects.create(model=f"test_model{i}", manufacturer_id=1)
+        res = self.client.get(CAR_LIST_URL, {"model": "1"})
+        for car in res.context["car_list"]:
+            self.assertIn("1", car.model)
+
 
 class PublicDriverTest(TestCase):
 
@@ -196,6 +210,19 @@ class PrivateDriverTest(TestCase):
         self.assertEqual(list(res.context["driver_list"]),
                          list(drivers))
         self.assertTemplateUsed(res, "taxi/driver_list.html")
+
+    def test_search_drivers(self):
+        for i in range(20):
+            get_user_model().objects.create_user(
+                username=f"test_username{i}",
+                first_name="first_name",
+                last_name="last_name",
+                license_number=f"DSA1{i}3{i}5",
+                password="test123"
+            )
+        res = self.client.get(DRIVER_LIST_URL, {"username": "1"})
+        for driver in res.context["driver_list"]:
+            self.assertIn("1", driver.username)
 
     def test_retrieve_concrete_driver(self):
         driver = Driver.objects.get(id=1)
