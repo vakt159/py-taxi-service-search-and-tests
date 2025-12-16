@@ -6,8 +6,10 @@ from taxi.models import Manufacturer, Car, Driver
 
 MANUFACTURER_LIST_URL = reverse("taxi:manufacturer-list")
 MANUFACTURER_CREATE_URL = reverse("taxi:manufacturer-create")
-MANUFACTURER_UPDATE_URL = reverse("taxi:manufacturer-update", kwargs={"pk": 1})
-MANUFACTURER_DELETE_URL = reverse("taxi:manufacturer-delete", kwargs={"pk": 1})
+MANUFACTURER_UPDATE_URL = reverse("taxi:manufacturer-update",
+                                  kwargs={"pk": 1})
+MANUFACTURER_DELETE_URL = reverse("taxi:manufacturer-delete",
+                                  kwargs={"pk": 1})
 
 CAR_LIST_URL = reverse("taxi:car-list")
 CAR_DETAIL_URL = reverse("taxi:car-detail", kwargs={"pk": 1})
@@ -85,7 +87,9 @@ class PrivateManufacturerTest(TestCase):
 
     def test_search_cars(self):
         for i in range(20):
-            Manufacturer.objects.create(name=f"test_name{i}", country="Some country")
+            Manufacturer.objects.create(
+                name=f"test_name{i}",
+                country="Some country")
         res = self.client.get(MANUFACTURER_LIST_URL, {"name": "1"})
         for manufacturer in res.context["manufacturer_list"]:
             self.assertIn("1", manufacturer.name)
