@@ -154,6 +154,7 @@ class PrivateCarTest(TestCase):
         after_count = Car.objects.count()
         self.assertNotEqual(before_count, after_count)
 
+
 class PublicDriverTest(TestCase):
 
     def test_list_page_login_required(self):
@@ -218,11 +219,11 @@ class PrivateDriverTest(TestCase):
         data = {"license_number": "DQS12345"}
         self.client.post(DRIVER_UPDATE_URL, data)
         after_update = Driver.objects.get(id=1)
-        self.assertNotEqual(before_update.license_number, after_update.license_number)
+        self.assertNotEqual(before_update.license_number,
+                            after_update.license_number)
 
     def test_delete_driver(self):
         before_count = Driver.objects.count()
         self.client.post(DRIVER_DELETE_URL)
         after_count = Driver.objects.count()
         self.assertNotEqual(before_count, after_count)
-

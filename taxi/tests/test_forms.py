@@ -6,7 +6,7 @@ from taxi.forms import DriverCreationForm, DriverLicenseUpdateForm, \
 
 
 class DriverTests(TestCase):
-    def test_driver_creating_with_license_number_first_last_name_is_valid(self):
+    def test_creating_with_license_number_first_last_name_is_valid(self):
         form_data = {"username": "test1",
                      "license_number": "DSS12345",
                      "first_name": "213",
